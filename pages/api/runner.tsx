@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { exec } from "child_process";
-import fs from "fs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,13 +8,13 @@ export default async function handler(
   if (req.method === "GET") {
     res.status(200).json({ message: "GET request received" });
   } else if (req.method === "POST") {
-    const data = req.body.code;
-    exec(`node -e ${data}`, (error, stdout, stderr) => {
-      if (error) res.status(500).json({ error });
-      if (stderr) res.status(400).json({ stderr });
-      res.status(200).json({ output: stdout });
+    let data = req.body.code;
+    exec("node -e " + JSON.stringify(data), (error, stdout, stderr) => {
+      if (error) return res.status(500).json({ error });
+      if (stderr) return res.status(400).json({ stderr });
+      return res.status(200).json({ output: stdout });
     });
   } else {
-    res.status(405).json({ message: "Method Not Allowed" });
+    return res.status(405).json({ message: "Method Not Allowed" });
   }
 }
