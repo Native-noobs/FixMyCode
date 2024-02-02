@@ -17,7 +17,7 @@ const Code_playground = () => {
   const [font, setFont] = useState<string>();
   useEffect(() => {
     try {
-      setFont(localStorage.getItem("font") || "16");
+      setFont(localStorage.getItem("font") || "monokai");
       setFontSize(Number(localStorage.getItem("fontSize")) || 16);
     } catch (error) {
       console.log(error);
