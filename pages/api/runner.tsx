@@ -10,9 +10,7 @@ export default async function handler(
     res.status(200).json({ message: "GET request received" });
   } else if (req.method === "POST") {
     const data = req.body.code;
-    fs.writeFileSync("./codes/test.js", data);
-
-    exec(`node ./codes/test.js`, (error, stdout, stderr) => {
+    exec(`node -e ${data}`, (error, stdout, stderr) => {
       if (error) res.status(500).json({ error });
       if (stderr) res.status(400).json({ stderr });
       res.status(200).json({ output: stdout });
