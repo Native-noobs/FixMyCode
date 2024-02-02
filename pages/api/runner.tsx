@@ -8,10 +8,15 @@ export default async function handler(
   if (req.method === "GET") {
     res.status(200).json({ message: "GET request received" });
   } else if (req.method === "POST") {
-    let data = req.body.code;
-    exec("node -e " + JSON.stringify(data), (error, stdout, stderr) => {
-      if (error) return res.status(500).json({ error });
-      if (stderr) return res.status(400).json({ stderr });
+    let data = req.body.code.replace(/\n/g, ";");
+    return exec("node -e " + JSON.stringify(data), (error, stdout, stderr) => {
+      if (error) {
+        return res.status(500).json({ error: error.message });
+      }
+      if (stderr) {
+        console.log("runtime xato" + stderr);
+        return res.status(400).json(stderr);
+      }
       return res.status(200).json({ output: stdout });
     });
   } else {

@@ -26,6 +26,7 @@ const Code_playground = () => {
 
   const [settingModal, setSettingModal] = useState<boolean>(false);
   const [output, setOutput] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [code, setCode] = useState<string>(
     "// Codingizni shu joyga yozing... :)"
   );
@@ -121,6 +122,7 @@ const Code_playground = () => {
           <h3 className="text-3xl font-semibold">Chiqish</h3>
           <div className="bg-slate-600 w-full min-h-10 p-5 rounded-md mt-10">
             {output}
+            {error}
           </div>
         </div>
       </div>
@@ -145,7 +147,12 @@ const Code_playground = () => {
             })
               .then((res) => res.json())
               .then((data) => {
+                if (data.error) setError(data.error);
+
                 setOutput(data.output);
+              })
+              .catch((err) => {
+                console.log(err);
               });
           }}
         >
@@ -165,7 +172,12 @@ const Code_playground = () => {
             })
               .then((res) => res.json())
               .then((data) => {
+                if (data.error) setError(data.error);
+
                 setOutput(data.output);
+              })
+              .catch((err) => {
+                console.log(err);
               });
           }}
         >
