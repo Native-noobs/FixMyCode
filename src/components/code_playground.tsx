@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import AceEditor from "react-ace";
 import { MdOutlineSettings } from "react-icons/md";
 
@@ -13,12 +13,17 @@ import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 const Code_playground = () => {
-  const [fontSize, setFontSize] = useState<number>(
-    Number(localStorage.getItem("fontSize") || 16)
-  );
-  const [font, setFont] = useState<string>(
-    localStorage.getItem("font") || "monokai"
-  );
+  const [fontSize, setFontSize] = useState<number>();
+  const [font, setFont] = useState<string>();
+  useEffect(() => {
+    try {
+      setFont(localStorage.getItem("font") || "16");
+      setFontSize(Number(localStorage.getItem("fontSize")) || 16);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
   const [settingModal, setSettingModal] = useState<boolean>(false);
   const [output, setOutput] = useState<string>("");
   const [code, setCode] = useState<string>(
@@ -26,7 +31,7 @@ const Code_playground = () => {
   );
 
   useEffect(() => {
-    localStorage.setItem("font", font);
+    localStorage.setItem("font", font || "monokai");
     localStorage.setItem("fontSize", String(fontSize));
     setSettingModal(false);
   }, [font, fontSize]);
