@@ -12,7 +12,7 @@ import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-const code_playground = () => {
+const Code_playground = () => {
   const [fontSize, setFontSize] = useState<number>(
     Number(localStorage.getItem("fontSize") || 16)
   );
@@ -171,4 +171,4 @@ const code_playground = () => {
   );
 };
 
-export default code_playground;
+export default Code_playground;
