@@ -6,4 +6,14 @@
     .bg-blur {
         backdrop-filter: blur(4px);
     }
+
+    .scroll::-webkit-scrollbar {
+        width: 5px;
+        background: #666;
+    }
+
+    .scroll::-webkit-scrollbar-thumb {
+        background: #999;
+        border-radius: 20px;
+    }
 }
