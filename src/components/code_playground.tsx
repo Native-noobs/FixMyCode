@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AceEditor from "react-ace";
 import { MdOutlineSettings } from "react-icons/md";
 import { CgSpinner } from "react-icons/cg";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
@@ -12,6 +13,7 @@ import "ace-builds/src-noconflict/theme-cobalt";
 import "ace-builds/src-noconflict/theme-dracula";
 import "ace-builds/src-noconflict/theme-terminal";
 import "ace-builds/src-noconflict/ext-language_tools";
+import Link from "next/link";
 
 const Code_playground = () => {
   const [fontSize, setFontSize] = useState<number>();
@@ -41,8 +43,60 @@ const Code_playground = () => {
     setSettingModal(false);
   }, [font, fontSize]);
 
+  const handleCodeTest = () => {
+    setTest(true);
+    setError("");
+    fetch("/api/runner", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        code,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTest(false);
+        if (data.error) setError(data.error);
+        setOutput(data.output);
+      })
+      .catch((err) => {
+        setTest(false);
+        console.log(err);
+      });
+  };
+  const handleCodeSubmit = () => {
+    setSubmit(true);
+    setError("");
+    fetch("/api/runner", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        code,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSubmit(false);
+        if (data.error) setError(data.error);
+        setOutput(data.output);
+      })
+      .catch((err) => {
+        setSubmit(false);
+        console.log(err);
+      });
+  };
   return (
     <div>
+      <Link
+        href="/"
+        className="flex items-center gap-2 hover:text-neutral-400 hover:underline w-max"
+      >
+        <IoArrowBackOutline /> Uyga vazifalar ro'yhatiga qaytish
+      </Link>
       <div className="flex justify-between my-10 relative">
         <h1 className="text-4xl text-white font-semibold">
           Uyga vazifani topshirish uchun
@@ -62,7 +116,7 @@ const Code_playground = () => {
               </label>
               <select
                 id="font"
-                className="rounded-sm w-max"
+                className="rounded-sm w-max text-black"
                 onChange={(e) => {
                   setFontSize(Number(e.target.value));
                 }}
@@ -81,7 +135,7 @@ const Code_playground = () => {
               </label>
               <select
                 id="font"
-                className="rounded-sm w-max"
+                className="rounded-sm w-max text-black"
                 onChange={(e) => {
                   setFont(e.target.value);
                 }}
@@ -124,18 +178,20 @@ const Code_playground = () => {
         />
         <div className="w-2/4 h-[600px] bg-gray-900 text-white p-8 overflow-auto scroll mr-1">
           <h3 className="text-3xl font-semibold">Chiqish</h3>
-          <div className="bg-slate-600 w-full min-h-10 p-5 rounded-md mt-10">
-            {output}
-            {error
-              ?.split("[eval]:1")[1]
-              ?.split("")
-              ?.map((e, i) => {
-                if (e === "\n") {
-                  return <br key={i} />;
-                }
-                return e;
-              })}
-          </div>
+          {(error || output) && (
+            <div className="bg-slate-600 w-full min-h-10 p-5 rounded-md mt-10">
+              {output}
+              {error
+                ?.split("[eval]:1")[1]
+                ?.split("")
+                ?.map((e, i) => {
+                  if (e === "\n") {
+                    return <br key={i} />;
+                  }
+                  return e;
+                })}
+            </div>
+          )}
         </div>
       </div>
       {settingModal && (
@@ -144,33 +200,14 @@ const Code_playground = () => {
           onClick={() => setSettingModal(false)}
         ></div>
       )}
-      <div className="ml-auto text-white mt-5 flex w-full justify-end gap-5">
+      <form
+        action="/code"
+        className="ml-auto text-white mt-5 flex w-full justify-end gap-5"
+      >
         <button
           className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 flex items-center gap-2 duration-500 disabled:bg-blue-400"
           disabled={test}
-          onClick={() => {
-            setTest(true);
-            setError("");
-            fetch("/api/runner", {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({
-                code,
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                setTest(false);
-                if (data.error) setError(data.error);
-                setOutput(data.output);
-              })
-              .catch((err) => {
-                setTest(false);
-                console.log(err);
-              });
-          }}
+          onClick={handleCodeTest}
         >
           <CgSpinner
             className={`animate-spin duration-500 ${!test && "hidden"}`}
@@ -180,34 +217,12 @@ const Code_playground = () => {
         <button
           className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 flex items-center gap-2 w-max duration-500 disabled:bg-"
           disabled={submit}
-          onClick={() => {
-            setSubmit(true);
-            setError("");
-            fetch("/api/runner", {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({
-                code,
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                setSubmit(false);
-                if (data.error) setError(data.error);
-                setOutput(data.output);
-              })
-              .catch((err) => {
-                setSubmit(false);
-                console.log(err);
-              });
-          }}
+          onClick={handleCodeSubmit}
         >
           {submit && <CgSpinner className="animate-spin" size={20} />}
           Tekshirish
         </button>
-      </div>
+      </form>
     </div>
   );
 };
