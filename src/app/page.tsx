@@ -1,5 +1,4 @@
 import Link from "next/link";
-import CodePlayground from "./../components/code_playground";
 import { MdOutlineAccountCircle } from "react-icons/md";
 
 const data = [
@@ -56,7 +55,6 @@ export default function Home() {
   return (
     <main className="bg-slate-800 w-full min-h-dvh flex flex-col text-gray-100">
       <div className="container mx-auto my-10">
-        {/* <CodePlayground /> */}
         <nav className="flex justify-between items-center">
           <h1 className="text-4xl font-semibold">Uyga vazifalar ro'yxati</h1>
           <div className="w-14 h-14 bg-gray-900 rounded-full flex items-center justify-center text-4xl select-none cursor-pointer">
