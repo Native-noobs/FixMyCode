@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { MdOutlineAccountCircle } from "react-icons/md";
+import Link from 'next/link'
+import { MdOutlineAccountCircle } from 'react-icons/md'
 
 const data = [
   {
@@ -14,14 +14,14 @@ const data = [
       },
       {
         id: 2,
-        title: "Yoshni hisoblash",
+        title: 'Yoshni hisoblash',
         input: [2001, 2024],
         output: 23,
       },
       {
         id: 3,
-        title: "Kalkulator yasash",
-        input: [12, 24, "+"],
+        title: 'Kalkulator yasash',
+        input: [12, 24, '+'],
         output: 36,
       },
     ],
@@ -38,19 +38,19 @@ const data = [
       },
       {
         id: 1,
-        title: "Yoshni hisoblash",
+        title: 'Yoshni hisoblash',
         input: [2001, 2024],
         output: 23,
       },
       {
         id: 1,
-        title: "Kalkulator yasash",
-        input: [12, 24, "+"],
+        title: 'Kalkulator yasash',
+        input: [12, 24, '+'],
         output: 36,
       },
     ],
   },
-];
+]
 export default function Home() {
   return (
     <main className="bg-slate-800 w-full min-h-dvh flex flex-col text-gray-100">
@@ -80,20 +80,20 @@ export default function Home() {
                           <p className="text-xl">{homework.title}</p>
                         </div>
                         <Link
-                          href={"/homework/" + lesson.id + "/" + homework.id}
+                          href={'/homework/' + lesson.id + '/' + homework.id}
                           className="w-max px-5 py-2 font-sans font-medium bg-blue-500 rounded-xl"
                         >
                           Yechish
                         </Link>
                       </div>
-                    );
+                    )
                   })}
                 </div>
               </div>
-            );
+            )
           })}
         </div>
       </div>
     </main>
-  );
+  )
 }

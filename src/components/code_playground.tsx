@@ -1,55 +1,55 @@
-"use client";
-import { useEffect, useState } from "react";
-import AceEditor from "react-ace";
-import { MdOutlineSettings } from "react-icons/md";
-import { CgSpinner } from "react-icons/cg";
-import { IoArrowBackOutline } from "react-icons/io5";
+'use client'
+import { useEffect, useState } from 'react'
+import AceEditor from 'react-ace'
+import { MdOutlineSettings } from 'react-icons/md'
+import { CgSpinner } from 'react-icons/cg'
+import { IoArrowBackOutline } from 'react-icons/io5'
 
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/theme-ambiance";
-import "ace-builds/src-noconflict/theme-chaos";
-import "ace-builds/src-noconflict/theme-cobalt";
-import "ace-builds/src-noconflict/theme-dracula";
-import "ace-builds/src-noconflict/theme-terminal";
-import "ace-builds/src-noconflict/ext-language_tools";
-import Link from "next/link";
+import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/theme-monokai'
+import 'ace-builds/src-noconflict/theme-ambiance'
+import 'ace-builds/src-noconflict/theme-chaos'
+import 'ace-builds/src-noconflict/theme-cobalt'
+import 'ace-builds/src-noconflict/theme-dracula'
+import 'ace-builds/src-noconflict/theme-terminal'
+import 'ace-builds/src-noconflict/ext-language_tools'
+import Link from 'next/link'
 
 const Code_playground = () => {
-  const [fontSize, setFontSize] = useState<number>();
-  const [font, setFont] = useState<string>();
-  const [test, setTest] = useState<boolean>(false);
-  const [submit, setSubmit] = useState<boolean>(false);
+  const [fontSize, setFontSize] = useState<number>()
+  const [font, setFont] = useState<string>()
+  const [test, setTest] = useState<boolean>(false)
+  const [submit, setSubmit] = useState<boolean>(false)
 
   useEffect(() => {
     try {
-      setFont(localStorage.getItem("font") || "monokai");
-      setFontSize(Number(localStorage.getItem("fontSize")) || 16);
+      setFont(localStorage.getItem('font') || 'monokai')
+      setFontSize(Number(localStorage.getItem('fontSize')) || 16)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  }, []);
+  }, [])
 
-  const [settingModal, setSettingModal] = useState<boolean>(false);
-  const [output, setOutput] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [settingModal, setSettingModal] = useState<boolean>(false)
+  const [output, setOutput] = useState<string>('')
+  const [error, setError] = useState<string>('')
   const [code, setCode] = useState<string>(
-    "// Codingizni shu joyga yozing... :)"
-  );
+    '// Codingizni shu joyga yozing... :)',
+  )
 
   useEffect(() => {
-    localStorage.setItem("font", font || "monokai");
-    localStorage.setItem("fontSize", String(fontSize));
-    setSettingModal(false);
-  }, [font, fontSize]);
+    localStorage.setItem('font', font || 'monokai')
+    localStorage.setItem('fontSize', String(fontSize))
+    setSettingModal(false)
+  }, [font, fontSize])
 
   const handleCodeTest = () => {
-    setTest(true);
-    setError("");
-    fetch("/api/runner", {
-      method: "POST",
+    setTest(true)
+    setError('')
+    fetch('/api/runner', {
+      method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
         code,
@@ -57,22 +57,22 @@ const Code_playground = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setTest(false);
-        if (data.error) setError(data.error);
-        setOutput(data.output);
+        setTest(false)
+        if (data.error) setError(data.error)
+        setOutput(data.output)
       })
       .catch((err) => {
-        setTest(false);
-        console.log(err);
-      });
-  };
+        setTest(false)
+        console.log(err)
+      })
+  }
   const handleCodeSubmit = () => {
-    setSubmit(true);
-    setError("");
-    fetch("/api/runner", {
-      method: "POST",
+    setSubmit(true)
+    setError('')
+    fetch('/api/runner', {
+      method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify({
         code,
@@ -80,15 +80,15 @@ const Code_playground = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setSubmit(false);
-        if (data.error) setError(data.error);
-        setOutput(data.output);
+        setSubmit(false)
+        if (data.error) setError(data.error)
+        setOutput(data.output)
       })
       .catch((err) => {
-        setSubmit(false);
-        console.log(err);
-      });
-  };
+        setSubmit(false)
+        console.log(err)
+      })
+  }
   return (
     <div>
       <Link
@@ -118,7 +118,7 @@ const Code_playground = () => {
                 id="font"
                 className="rounded-sm w-max text-black"
                 onChange={(e) => {
-                  setFontSize(Number(e.target.value));
+                  setFontSize(Number(e.target.value))
                 }}
                 defaultValue={fontSize}
               >
@@ -137,7 +137,7 @@ const Code_playground = () => {
                 id="font"
                 className="rounded-sm w-max text-black"
                 onChange={(e) => {
-                  setFont(e.target.value);
+                  setFont(e.target.value)
                 }}
                 defaultValue={font}
               >
@@ -173,7 +173,7 @@ const Code_playground = () => {
             useWorker: false,
           }}
           onChange={(e) => {
-            setCode(e);
+            setCode(e)
           }}
         />
         <div className="w-2/4 h-[600px] bg-gray-900 text-white p-8 overflow-auto scroll mr-1">
@@ -182,13 +182,13 @@ const Code_playground = () => {
             <div className="bg-slate-600 w-full min-h-10 p-5 rounded-md mt-10">
               {output}
               {error
-                ?.split("[eval]:1")[1]
-                ?.split("")
+                ?.split('[eval]:1')[1]
+                ?.split('')
                 ?.map((e, i) => {
-                  if (e === "\n") {
-                    return <br key={i} />;
+                  if (e === '\n') {
+                    return <br key={i} />
                   }
-                  return e;
+                  return e
                 })}
             </div>
           )}
@@ -210,7 +210,7 @@ const Code_playground = () => {
           onClick={handleCodeTest}
         >
           <CgSpinner
-            className={`animate-spin duration-500 ${!test && "hidden"}`}
+            className={`animate-spin duration-500 ${!test && 'hidden'}`}
           />
           Sinash
         </button>
@@ -224,7 +224,7 @@ const Code_playground = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Code_playground;
+export default Code_playground

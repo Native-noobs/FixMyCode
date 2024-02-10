@@ -1,5 +1,5 @@
-"use client";
-import Code_playground from "@/components/code_playground";
+'use client'
+import Code_playground from '@/components/code_playground'
 
 const Code = () => {
   return (
@@ -8,7 +8,7 @@ const Code = () => {
         <Code_playground />
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Code;
+export default Code
