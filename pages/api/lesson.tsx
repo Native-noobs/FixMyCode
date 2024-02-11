@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from '../db'
+import { prisma } from '../../lib/db'
 import { Lesson } from '@prisma/client'
 
 export default async function handler(

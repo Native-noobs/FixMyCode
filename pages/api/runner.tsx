@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { exec } from 'child_process'
-import { prisma } from '../db'
+import { prisma } from '../../lib/db'
 import { resultResponse } from '../../types/type'
 
 export default async function handler(
