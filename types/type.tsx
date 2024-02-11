@@ -20,3 +20,11 @@ export interface TestCases {
 export interface HomeWorkProps {
     data?: Homework;
 }
+export interface resultResponse {
+    output?: string
+    result?: boolean
+}
+export interface resultRes {
+    output?: string
+    result?: resultResponse[]
+}

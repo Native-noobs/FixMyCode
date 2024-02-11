@@ -14,8 +14,9 @@ import 'ace-builds/src-noconflict/theme-dracula'
 import 'ace-builds/src-noconflict/theme-terminal'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import Link from 'next/link'
-import { HomeWorkProps } from '../../types/type'
+import { HomeWorkProps, resultRes } from '../../types/type'
 import React from 'react'
+import './codePlayground.css'
 
 const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
 
@@ -37,7 +38,7 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
   }, [])
 
   const [settingModal, setSettingModal] = useState<boolean>(false)
-  const [output, setOutput] = useState<string>('')
+  const [output, setOutput] = useState<resultRes>()
   const [error, setError] = useState<string>('')
   const [code, setCode] = useState<string>(data.initializeCode)
   useEffect(() => {
@@ -69,6 +70,8 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
         console.log(err)
       })
   }
+
+
   const handleCodeSubmit = () => {
     setSubmit(true)
     setError('')
@@ -79,13 +82,15 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
       },
       body: JSON.stringify({
         code,
+        homeworkId: data.id,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setSubmit(false)
         if (data.error) setError(data.error)
-        setOutput(data.output)
+        setOutput(data)
       })
       .catch((err) => {
         setSubmit(false)
@@ -99,7 +104,7 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
         href="/"
         className="flex items-center gap-2 hover:text-neutral-400 hover:underline w-max"
       >
-        <IoArrowBackOutline /> Uyga vazifalar ro'yhatiga qaytish
+        <IoArrowBackOutline />Uyga vazifalar ro'yhatiga qaytish
       </Link>
       <div className="flex justify-between my-10 relative">
         <div>
@@ -174,6 +179,7 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
             enableSnippets: true,
+            enableMultiselect: true,
             showLineNumbers: true,
             tabSize: 2,
             useWorker: false,
@@ -183,10 +189,21 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
           }}
         />
         <div className="w-2/4 h-[600px] bg-gray-900 text-white p-8 overflow-auto scroll mr-1">
-          <h3 className="text-3xl font-semibold">Chiqish</h3>
+          <h3 className="text-3xl font-semibold">Natija</h3>
           {(error || output) && (
-            <div className="bg-slate-600 w-full min-h-10 p-5 rounded-md mt-10">
-              {output}
+            <div className=" w-full min-h-10 p-5 rounded-md mt-10 flex flex-col gap-4">
+              {output?.result?.map((e, i) => {
+                return <div className='bg-slate-600 p-3 rounded-xl'>
+                  {e.result ? <div className="text-green-400">Success</div> :
+                    <div className='py-1'>
+                      <span className='text-red-500'>Error</span>
+                      <div className='overflow-auto scroll'>
+                        <div>Expected: {JSON.stringify(data.testCases[i].output)}</div>
+                        <div>Output: {e.output}</div>
+                      </div>
+                    </div>}
+                </div>
+              })}
               {error
                 ?.split('[eval]:1')[1]
                 ?.split('')

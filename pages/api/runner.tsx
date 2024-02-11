@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { exec } from 'child_process'
+import { prisma } from '../db'
+import { resultResponse } from '../../types/type'
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,17 +11,48 @@ export default async function handler(
     res.status(200).json({ message: 'GET request received' })
   } else if (req.method === 'POST') {
     let data = req.body.code.replace(/\n/g, ';')
-    return exec('node -e ' + JSON.stringify(data), (error, stdout, stderr) => {
-      if (error) {
-        return res.status(500).json({ error: error.message })
+    const { homeworkId } = req.body
+    const homework = await prisma.homework.
+      findFirst(
+        {
+          where:
+          {
+            id: homeworkId
+          },
+          include:
+          {
+            testCases: true
+          }
+        })
+
+    let result: resultResponse[] = []
+    homework?.testCases.map(async (e, i) => {
+      const resu = await execute(data, e.input)
+      const checkCode = resu.replace(/\n/g, '').replace(/\s/g, '').replace(/'/g, '"')
+      result = [...result, {
+        result: checkCode == JSON.stringify(e.output),
+        output: checkCode
+      }]
+      if (i === homework.testCases.length - 1) {
+        return res.send({
+          seccess: true,
+          result
+        })
       }
-      if (stderr) {
-        console.log('runtime error' + stderr)
-        return res.status(400).json(stderr)
-      }
-      return res.status(200).json({ output: stdout })
     })
   } else {
     return res.status(405).json({ message: 'Method Not Allowed' })
   }
 }
+const execute = (data: string, input: any) => {
+  return new Promise((resolve, reject) => {
+    exec(
+      "node -e " + JSON.stringify(data + ";" + `console.log(${input})`),
+      (error, stdout, stderr) => {
+        error && reject({ error, stderr });
+        stderr && reject(stderr);
+        resolve(stdout);
+      }
+    );
+  });
+};

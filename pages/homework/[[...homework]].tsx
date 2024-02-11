@@ -1,7 +1,7 @@
 'use client'
 import Code_playground from '@/components/code_playground'
 import { useRouter } from 'next/router'
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import 'tailwindcss/tailwind.css'
 import { Homework } from '../../types/type'
 
@@ -21,7 +21,7 @@ const Code = () => {
 
   return (
     <main className="bg-slate-800 w-full min-h-dvh justify-center flex flex-col text-gray-100">
-      <div className="container mx-auto">
+      <div className="p-10">
         <Code_playground data={homework} />
       </div>
     </main>
