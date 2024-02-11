@@ -28,16 +28,18 @@ export default async function handler(
     let result: resultResponse[] = []
     homework?.testCases.map(async (e, i) => {
       const resu = await execute(data, e.input)
-      const checkCode = resu.replace(/\n/g, '').replace(/\s/g, '').replace(/'/g, '"')
-      result = [...result, {
-        result: checkCode == JSON.stringify(e.output),
-        output: checkCode
-      }]
-      if (i === homework.testCases.length - 1) {
-        return res.send({
-          seccess: true,
-          result
-        })
+      if (typeof resu === 'string') {
+        const checkCode = resu.replace(/\n/g, '').replace(/\s/g, '').replace(/'/g, '"')
+        result = [...result, {
+          result: checkCode == JSON.stringify(e.output),
+          output: checkCode
+        }]
+        if (i === homework.testCases.length - 1) {
+          return res.send({
+            seccess: true,
+            result
+          })
+        }
       }
     })
   } else {
