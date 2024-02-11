@@ -104,7 +104,7 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
         href="/"
         className="flex items-center gap-2 hover:text-neutral-400 hover:underline w-max"
       >
-        <IoArrowBackOutline />Uyga vazifalar ro'yhatiga qaytish
+        <IoArrowBackOutline />Uyga vazifalar royhatiga qaytish
       </Link>
       <div className="flex justify-between my-10 relative">
         <div>
@@ -193,7 +193,7 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
           {(error || output) && (
             <div className=" w-full min-h-10 p-5 rounded-md mt-10 flex flex-col gap-4">
               {output?.result?.map((e, i) => {
-                return <div className='bg-slate-600 p-3 rounded-xl'>
+                return <div key={i} className='bg-slate-600 p-3 rounded-xl'>
                   {e.result ? <div className="text-green-400">Success</div> :
                     <div className='py-1'>
                       <span className='text-red-500'>Error</span>
