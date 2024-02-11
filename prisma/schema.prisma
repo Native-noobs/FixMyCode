@@ -16,13 +16,15 @@ model Lesson {
 }
 
 model Homework {
-  id          String      @id @default(uuid()) @map("_id")
-  description Json
-  testCases   TestCases[]
-  Lesson      Lesson?     @relation(fields: [lessonId], references: [id])
-  lessonId    String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id             String      @id @default(uuid()) @map("_id")
+  title          String
+  description    Json
+  initializeCode String
+  testCases      TestCases[]
+  Lesson         Lesson?     @relation(fields: [lessonId], references: [id])
+  lessonId       String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 }
 
 model TestCases {

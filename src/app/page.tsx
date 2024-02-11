@@ -1,4 +1,7 @@
+"use client"
+import { Lesson } from '../../types/type'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { MdOutlineAccountCircle } from 'react-icons/md'
 
 const data = [
@@ -52,6 +55,14 @@ const data = [
   },
 ]
 export default function Home() {
+  const [lessons, setLessons] = useState([])
+  useEffect(() => {
+    fetch("/api/lesson").then(res => res.json())
+      .then(({ data }) => {
+        setLessons(data)
+      })
+  }, [])
+
   return (
     <main className="bg-slate-800 w-full min-h-dvh flex flex-col text-gray-100">
       <div className="container mx-auto my-10">
@@ -62,12 +73,12 @@ export default function Home() {
           </div>
         </nav>
         <div className="mt-14 mx-auto w-3/4">
-          {data.map((lesson) => {
+          {lessons.map((lesson: Lesson) => {
             return (
               <div key={lesson.lesson}>
                 <h1 className="text-4xl my-8">{lesson.lesson} - Dars</h1>
                 <div className="flex gap-5 flex-col">
-                  {lesson.homeworks.map((homework, i) => {
+                  {lesson.homework.map((homework, i) => {
                     return (
                       <div
                         className="w-full bg-slate-700 h-20 rounded-xl flex items-center px-5 hover:bg-slate-600 duration-200  justify-between"
@@ -80,7 +91,7 @@ export default function Home() {
                           <p className="text-xl">{homework.title}</p>
                         </div>
                         <Link
-                          href={'/homework/' + lesson.id + '/' + homework.id}
+                          href={'/homework/' + homework.id}
                           className="w-max px-5 py-2 font-sans font-medium bg-blue-500 rounded-xl"
                         >
                           Yechish

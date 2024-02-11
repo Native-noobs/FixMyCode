@@ -14,8 +14,14 @@ import 'ace-builds/src-noconflict/theme-dracula'
 import 'ace-builds/src-noconflict/theme-terminal'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import Link from 'next/link'
+import { HomeWorkProps } from '../../types/type'
+import React from 'react'
 
-const Code_playground = () => {
+const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
   const [fontSize, setFontSize] = useState<number>()
   const [font, setFont] = useState<string>()
   const [test, setTest] = useState<boolean>(false)
@@ -33,10 +39,7 @@ const Code_playground = () => {
   const [settingModal, setSettingModal] = useState<boolean>(false)
   const [output, setOutput] = useState<string>('')
   const [error, setError] = useState<string>('')
-  const [code, setCode] = useState<string>(
-    '// Codingizni shu joyga yozing... :)',
-  )
-
+  const [code, setCode] = useState<string>(data.initializeCode)
   useEffect(() => {
     localStorage.setItem('font', font || 'monokai')
     localStorage.setItem('fontSize', String(fontSize))
@@ -89,6 +92,7 @@ const Code_playground = () => {
         console.log(err)
       })
   }
+
   return (
     <div>
       <Link
@@ -98,9 +102,11 @@ const Code_playground = () => {
         <IoArrowBackOutline /> Uyga vazifalar ro'yhatiga qaytish
       </Link>
       <div className="flex justify-between my-10 relative">
-        <h1 className="text-4xl text-white font-semibold">
-          Uyga vazifani topshirish uchun
-        </h1>
+        <div>
+          <h1 className="text-4xl text-white font-semibold">
+            {data.title}
+          </h1>
+        </div>
         <button
           className="text-gray-100 flex items-center gap-2 z-[11]"
           onClick={() => setSettingModal(!settingModal)}

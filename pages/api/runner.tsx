@@ -14,7 +14,7 @@ export default async function handler(
         return res.status(500).json({ error: error.message })
       }
       if (stderr) {
-        console.log('runtime xato' + stderr)
+        console.log('runtime error' + stderr)
         return res.status(400).json(stderr)
       }
       return res.status(200).json({ output: stdout })

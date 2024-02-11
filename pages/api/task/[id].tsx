@@ -12,16 +12,19 @@ export default async function handler(
             testCases: true
         }
     })
-    if (!data) {
-        res.status(404).end()
-    }
+    if (!data) return res.status(404).end()
     if (req.method === 'GET') {
         res.status(200).json({
             status: true,
             data,
         })
     } else if (req.method === 'DELETE') {
-        await prisma.homework.delete({ where: { id: "76afa32e-f6bb-411f-93a2-ac78ec3ce13a" } })
-        res.status(204).end()
+        try {
+            await prisma.testCases.deleteMany({ where: { homeworkId: id as string } })
+            await prisma.homework.delete({ where: { id: id as string } })
+            res.status(204).end()
+        } catch (error) {
+            res.status(500).send(error)
+        }
     }
 }

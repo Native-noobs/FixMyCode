@@ -17,11 +17,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } else if (req.method === 'DELETE') {
         try {
             const find = await prisma.lesson.findFirst({ where: { id: id as string } })
-            if (!find) {
-                return res.status(404).json({ message: 'Lesson not found' })
-            }
-            const data = await prisma.lesson.delete({ where: { id: id as string } })
-            res.json(data)
+            if (!find) return res.status(404).json({ message: 'Lesson not found' })
+            await prisma.homework.deleteMany({ where: { lessonId: find.id } })
+            await prisma.lesson.delete({ where: { id: id as string } })
+            res.status(204).end()
         } catch (error) {
             console.error('Error deleting lesson:', error)
             res.status(500).json({ message: 'Internal server error' })
