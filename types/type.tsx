@@ -18,7 +18,7 @@ export interface TestCases {
     homeworkId: string
 }
 export interface HomeWorkProps {
-    data?: Homework;
+    data: Homework;
 }
 export interface resultResponse {
     output?: string

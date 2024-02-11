@@ -22,7 +22,10 @@ const Code = () => {
   return (
     <main className="bg-slate-800 w-full min-h-dvh justify-center flex flex-col text-gray-100">
       <div className="p-10">
-        <Code_playground data={homework} />
+        {
+          !homework ? <div>Loading...</div> :
+            <Code_playground data={homework} />
+        }
       </div>
     </main>
   )

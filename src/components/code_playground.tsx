@@ -1,10 +1,10 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, FC } from 'react'
 import AceEditor from 'react-ace'
 import { MdOutlineSettings } from 'react-icons/md'
 import { CgSpinner } from 'react-icons/cg'
+import Link from 'next/link'
 import { IoArrowBackOutline } from 'react-icons/io5'
-
 import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/theme-monokai'
 import 'ace-builds/src-noconflict/theme-ambiance'
@@ -13,20 +13,18 @@ import 'ace-builds/src-noconflict/theme-cobalt'
 import 'ace-builds/src-noconflict/theme-dracula'
 import 'ace-builds/src-noconflict/theme-terminal'
 import 'ace-builds/src-noconflict/ext-language_tools'
-import Link from 'next/link'
 import { HomeWorkProps, resultRes } from '../../types/type'
-import React from 'react'
 import './codePlayground.css'
 
-const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
-
-  if (!data) {
-    return <div>Loading...</div>;
-  }
+const Code_playground: FC<HomeWorkProps> = ({ data }) => {
   const [fontSize, setFontSize] = useState<number>()
   const [font, setFont] = useState<string>()
   const [test, setTest] = useState<boolean>(false)
   const [submit, setSubmit] = useState<boolean>(false)
+  const [settingModal, setSettingModal] = useState<boolean>(false)
+  const [output, setOutput] = useState<resultRes>()
+  const [error, setError] = useState<string>('')
+  const [code, setCode] = useState<string>(data.initializeCode)
 
   useEffect(() => {
     try {
@@ -36,11 +34,6 @@ const Code_playground: React.FC<HomeWorkProps> = ({ data }) => {
       console.log(error)
     }
   }, [])
-
-  const [settingModal, setSettingModal] = useState<boolean>(false)
-  const [output, setOutput] = useState<resultRes>()
-  const [error, setError] = useState<string>('')
-  const [code, setCode] = useState<string>(data.initializeCode)
   useEffect(() => {
     localStorage.setItem('font', font || 'monokai')
     localStorage.setItem('fontSize', String(fontSize))
