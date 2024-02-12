@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import 'tailwindcss/tailwind.css'
 import { Homework } from '../../types/type'
+import '../../src/style/loading.css'
 
 const Code = () => {
   const router = useRouter()
@@ -23,7 +24,7 @@ const Code = () => {
     <main className="bg-slate-800 w-full min-h-dvh justify-center flex flex-col text-gray-100">
       <div className="p-10">
         {
-          !homework ? <div>Loading...</div> :
+          !homework ? <div className='flex items-center justify-center'><div className='loader'></div></div> :
             <Code_playground data={homework} />
         }
       </div>

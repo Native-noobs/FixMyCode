@@ -3,7 +3,7 @@ import { Lesson } from '../../types/type'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { MdOutlineAccountCircle } from 'react-icons/md'
-
+import '../style/loading.css'
 
 export default function Home() {
   const [lessons, setLessons] = useState([])
@@ -18,13 +18,13 @@ export default function Home() {
     <main className="bg-slate-800 w-full min-h-dvh flex flex-col text-gray-100">
       <div className="container mx-auto my-10">
         <nav className="flex justify-between items-center">
-          <h1 className="text-4xl font-semibold">Uyga vazifalar royxati</h1>
+          <h1 className="text-4xl font-semibold">Uyga vazifalar ro&apos;yxati</h1>
           <div className="w-14 h-14 bg-gray-900 rounded-full flex items-center justify-center text-4xl select-none cursor-pointer">
             <MdOutlineAccountCircle />
           </div>
         </nav>
         <div className="mt-14 mx-auto w-3/4">
-          {lessons.map((lesson: Lesson) => {
+          {lessons[0] ? lessons.map((lesson: Lesson) => {
             return (
               <div key={lesson.lesson}>
                 <h1 className="text-4xl my-8">{lesson.lesson} - Dars</h1>
@@ -53,9 +53,14 @@ export default function Home() {
                 </div>
               </div>
             )
-          })}
+          }) :
+            <div className='w-full flex justify-center items-center h-[50vh]'>
+              <div className='loader'></div>
+            </div>
+          }
         </div>
       </div>
     </main>
   )
 }
+

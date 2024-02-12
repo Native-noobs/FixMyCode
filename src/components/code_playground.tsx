@@ -80,9 +80,8 @@ const Code_playground: FC<HomeWorkProps> = ({ data }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setSubmit(false)
-        if (data.error) setError(data.error)
+        if (data.error) setError(data.error.stderr)
         setOutput(data)
       })
       .catch((err) => {
@@ -97,7 +96,7 @@ const Code_playground: FC<HomeWorkProps> = ({ data }) => {
         href="/"
         className="flex items-center gap-2 hover:text-neutral-400 hover:underline w-max"
       >
-        <IoArrowBackOutline />Uyga vazifalar royhatiga qaytish
+        <IoArrowBackOutline />Uyga vazifalar ro&apos;yhatiga qaytish
       </Link>
       <div className="flex justify-between my-10 relative">
         <div>
@@ -198,7 +197,6 @@ const Code_playground: FC<HomeWorkProps> = ({ data }) => {
                 </div>
               })}
               {error
-                ?.split('[eval]:1')[1]
                 ?.split('')
                 ?.map((e, i) => {
                   if (e === '\n') {
