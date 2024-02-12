@@ -15,6 +15,7 @@ import 'ace-builds/src-noconflict/theme-terminal'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import { HomeWorkProps, resultRes } from '../../types/type'
 import './codePlayground.css'
+import { sendToTelegram } from '../../lib/telegram'
 
 const Code_playground: FC<HomeWorkProps> = ({ data }) => {
   const [fontSize, setFontSize] = useState<number>()
@@ -82,6 +83,9 @@ const Code_playground: FC<HomeWorkProps> = ({ data }) => {
       .then((data) => {
         setSubmit(false)
         if (data.error) setError(data.error.stderr)
+        sendToTelegram("Code: \n```\n" + code + "\n```" + "\n Ouput: ```\n" + JSON.stringify(data.result)
+          .replace("[", '')
+          .replace("]", '') + "\n```")
         setOutput(data)
       })
       .catch((err) => {
