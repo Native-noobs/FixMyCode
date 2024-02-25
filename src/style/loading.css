@@ -28,3 +28,99 @@
         transform: rotate(1turn)
     }
 }
+
+.loader2 {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    position: relative;
+    transform: rotate(45deg);
+    background: #ccc;
+}
+
+.loader2::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0px;
+    border-radius: 50%;
+    border: 12px solid white;
+    animation: prixClipFix 2s infinite linear;
+}
+
+@keyframes prixClipFix {
+    0% {
+        clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)
+    }
+
+    25% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)
+    }
+
+    50% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)
+    }
+
+    75% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%)
+    }
+
+    100% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0)
+    }
+}
+
+.toast-active {
+    animation: view 0.5s forwards;
+}
+
+@keyframes view {
+    0% {
+        opacity: 1;
+        transform: scale(0.3) rotate(45deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.3) rotate(0deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.toast_wrapper {
+    animation: view-toast 5s forwards ease-in;
+}
+
+@keyframes view-toast {
+    0% {
+        right: -100%;
+    }
+
+    10% {
+        right: 10%;
+    }
+
+    12% {
+        right: 5%;
+    }
+
+    15%,
+    20%,
+    30%,
+    40%,
+    50%,
+    60%,
+    70%,
+    80%,
+    90% {
+        right: 5%;
+    }
+
+    100% {
+        right: -100%;
+    }
+}

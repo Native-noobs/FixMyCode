@@ -32,13 +32,14 @@ const AdminLesson: React.FC = () => {
             })
     }, [id])
     function handleDeleteAction(e: Homework) {
+        setModal(true)
         fetch("/api/task/" + e.id, {
             // method: "DELETE"
         })
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                setModal(false)
+                // setModal(false)
             })
     }
 

@@ -9,7 +9,8 @@ const Modal: FC<modalProps> = (props) => {
     return (
         <>
             <div className="absolute w-full h-dvh top-0 left-0 flex items-end justify-center md:items-center">
-                <div className="bg-slate-900 max-w-[600px] w-full p-10 rounded-xl flex mx-10 gap-5 flex-col md:flex-row items-center md md:items-start relative z-10">
+                <div className="bg-slate-900 max-w-[600px] w-full p-10 rounded-xl flex mx-5
+                 gap-5 flex-col md:flex-row items-center md md:items-start relative z-10">
                     <div className="md:w-14 w-12 h-12 rounded-full bg-[rgba(255,0,0,0.3)] backdrop-blur-xl flex items-center justify-center">
                         <CiWarning size={30} color="red" />
                     </div>
