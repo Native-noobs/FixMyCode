@@ -12,10 +12,10 @@ export interface Homework {
     testCases: TestCases[]
 }
 export interface TestCases {
-    id: string,
-    input: any
-    output: any
-    homeworkId: string
+    id?: string,
+    input: any | undefined
+    output: any | undefined
+    homeworkId?: string
 }
 export interface HomeWorkProps {
     data: Homework;

@@ -91,7 +91,7 @@ const AdminLesson: React.FC = (props) => {
                 setModal(false)
             }} />
         <ModalForTask isOpen={taskModal} setIsOpen={handleTaskModal} id={id as string} />
-        <Toast/>
+        <Toast />
     </main>
 }
 
