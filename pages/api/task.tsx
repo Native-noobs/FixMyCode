@@ -38,7 +38,7 @@ export default async function handler(
             res.status(500).json({ message: 'Internal server error' })
         }
     } else {
-        res.setHeader('Allow', ['GET', 'DELETE'])
+        res.setHeader('Allow', ['GET', 'DELETE', "POST"])
         res.status(405).end(`Method ${req.method} Not Allowed`)
     }
 }

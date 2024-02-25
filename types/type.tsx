@@ -37,3 +37,8 @@ export interface modalProps {
     onClick?: () => void
     onCancel?: () => void
 }
+export interface LessonModalPros {
+    isOpen: boolean
+    setIsOpen: () => void
+    id?: string
+}

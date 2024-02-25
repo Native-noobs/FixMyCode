@@ -9,11 +9,13 @@ import "@/../pages/admin/lesson/style.css"
 import { BiPlus } from "react-icons/bi"
 import Toast from "@/components/toastify"
 import { toast } from "react-toastify"
+import ModalForLesson from "@/components/modal-lesson"
 
 const Admin: FC = () => {
 
     const [lessons, setLessons] = useState<Lesson[]>()
     const [modal, setModal] = useState<boolean>(false)
+    const [lessonModal, setLessonModal] = useState<boolean>(false)
     const notify = () => toast.success("Successfully deleted!");
 
     useEffect(() => {
@@ -26,14 +28,16 @@ const Admin: FC = () => {
     function handleDeleteAction(e: Lesson) {
         setModal(true)
         fetch("/api/lesson/" + e.id, {
-            // method: "DELETE"
+            method: "DELETE"
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
+            .then(res => {
                 notify()
-                // setModal(false)
             })
+            .then(data => {
+            })
+    }
+    function setIsOpen() {
+        setLessonModal(false)
     }
     return <main className="bg-slate-800 w-full min-h-dvh flex flex-col text-gray-100">
         <div className="container mx-auto my-10 p-5 md:px-0">
@@ -43,7 +47,7 @@ const Admin: FC = () => {
                 {
                     lessons?.map((e, i) => {
                         return <div key={e.id} className="w-full h-14 bg-slate-700 justify-between flex rounded-xl items-center px-5 hover:bg-slate-600 duration-500 md:w-2/4">
-                            <Link className="hover:underline hover:opacity-80" href={"/admin/lesson/" + e.id}>{e.lesson} - Lesson</Link>
+                            <Link className="hover:underline hover:opacity-80" href={"/admin/lesson/" + e.id}>{e.lesson}</Link>
                             <div className="flex gap-4">
                                 <button className="hover:scale-105 active:scale-95 duration-200 edit-button">
                                     <MdEdit size="22" color="dodgerblue" />
@@ -57,8 +61,11 @@ const Admin: FC = () => {
                 }
             </div>
         </div>
-        <div className="absolute bottom-10 right-10">
-            <button className="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center hover:scale-105 active:scale-95 duration-200 shadow-sm shadow-blue-400">
+        <div className="absolute bottom-10 right-10"
+            onClick={() => {
+                setLessonModal(true)
+            }}>
+            <button className="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center hover:scale-110 active:scale-95 duration-200 shadow-sm shadow-blue-400 hover:rotate-45">
                 <BiPlus size="20px" />
             </button>
         </div>
@@ -72,6 +79,7 @@ const Admin: FC = () => {
                 setModal(false)
             }} />
         <Toast />
+        <ModalForLesson isOpen={lessonModal} setIsOpen={setIsOpen} />
     </main>
 }
 export default Admin

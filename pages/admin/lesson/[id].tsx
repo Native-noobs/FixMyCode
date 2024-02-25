@@ -10,39 +10,41 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import '../../../src/style/loading.css'
 import './style.css'
 import Modal from "@/components/modal";
+import ModalForTask from "@/components/modalTask";
+import { toast } from "react-toastify";
+import Toast from "@/components/toastify";
 
-
-const AdminLesson: React.FC = () => {
+const AdminLesson: React.FC = (props) => {
     const { query: { id } } = useRouter()
 
-    const [task, setTask] = useState<Homework[]>([])
     const [lesson, setLesson] = useState<Lesson>()
     const [modal, setModal] = useState<boolean>(false)
+    const [taskModal, setTaskModal] = useState<boolean>(false)
 
     useEffect(() => {
-        fetch("/api/task")
-            .then(res => res.json())
-            .then(data => {
-                setTask(data.data)
-            })
         id && fetch("/api/lesson/" + id)
             .then(res => res.json())
             .then(data => {
                 setLesson(data)
             })
     }, [id])
+
     function handleDeleteAction(e: Homework) {
         setModal(true)
         fetch("/api/task/" + e.id, {
-            // method: "DELETE"
+            method: "DELETE"
         })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                // setModal(false)
+            .then(res => {
+                if (res.ok) {
+                    toast.success("Successfully deleted")
+                    setModal(false)
+                }
+                toast.error("Something went wrong!")
             })
     }
-
+    function handleTaskModal() {
+        setTaskModal(false)
+    }
     return <main className="bg-slate-800 w-full min-h-dvh flex flex-col text-gray-100">
         <div className="container mx-auto my-10 p-5 md:px-0">
             <Link href=".." className="hover:underline text-slate-300 flex items-center gap-2">
@@ -50,11 +52,11 @@ const AdminLesson: React.FC = () => {
                 Back
             </Link>
 
-            <h1 className="text-4xl font-semibold text-center">{lesson?.lesson}- Lesson</h1>
+            <h1 className="text-4xl font-semibold text-center">{lesson?.lesson}</h1>
             <h2 className="mt-10 text-4xl text-center">Tasks:</h2>
             <div className="w-full flex flex-col gap-5 mt-5 items-center">
-                {task[0] ?
-                    task?.map((e, i) => {
+                {lesson?.homework[0] ?
+                    lesson?.homework?.map((e, i) => {
                         return <div key={e.id} className="w-full h-14 bg-slate-700 justify-between flex rounded-xl items-center px-5 hover:bg-slate-600 duration-500 md:w-2/4">
                             <p>{i + 1} - {e.title}</p>
                             <div className="flex gap-4">
@@ -71,8 +73,10 @@ const AdminLesson: React.FC = () => {
                     <div className='flex items-center justify-center h-60'><div className='loader'></div></div>
                 }
             </div>
-            <div className="absolute bottom-10 right-10">
-                <button className="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center hover:scale-105 active:scale-95 duration-200">
+            <div className="absolute bottom-10 right-10" onClick={() => {
+                setTaskModal(true)
+            }}>
+                <button className="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center hover:scale-110 active:scale-95 duration-200 shadow-sm shadow-blue-400 hover:rotate-45">
                     <BiPlus size="20px" />
                 </button>
             </div>
@@ -86,6 +90,8 @@ const AdminLesson: React.FC = () => {
             onCancel={() => {
                 setModal(false)
             }} />
+        <ModalForTask isOpen={taskModal} setIsOpen={handleTaskModal} id={id as string} />
+        <Toast/>
     </main>
 }
 

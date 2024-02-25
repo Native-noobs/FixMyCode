@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id } = req.query
     if (req.method === 'GET') {
         try {
-            const data = await prisma.lesson.findFirst({ where: { id: id as string } })
+            const data = await prisma.lesson.findFirst({ where: { id: id as string }, include: { homework: true } })
             if (!data) {
                 return res.status(404).json({ message: 'Lesson not found' })
             }

@@ -9,7 +9,7 @@ datasource db {
 
 model Lesson {
   id        String     @id @default(uuid()) @map("_id")
-  lesson    Int
+  lesson    String
   homework  Homework[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
