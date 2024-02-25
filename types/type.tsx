@@ -28,3 +28,12 @@ export interface resultRes {
     output?: string
     result?: resultResponse[]
 }
+export interface modalProps {
+    title: string
+    text: string
+    isOpen: boolean
+    acceptButtonText: string
+    rejectButtonText: string
+    onClick?: () => void
+    onCancel?: () => void
+}
