@@ -8,7 +8,9 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-markdown";
 import { PiPlus } from "react-icons/pi";
+import "../app/globals.css";
 
 const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -62,7 +64,7 @@ const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
                 className="w-[80%] relative z-10 rounded-2xl p-10 h-[80%] bg-[rgba(81,82,127,0.6)] flex flex-col justify-between"
                 onSubmit={handleCreateTopic}
             >
-                <div>
+                <div className="overflow-auto my-5 scroll pr-3">
                     <div className="flex justify-between">
                         <span></span>
                         <p className="text-4xl font-bold">Add new task</p>
@@ -150,6 +152,37 @@ const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
                                     </button>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                    <div className="mt-5 h-auto">
+                        <p className="text-4xl my-10">Description</p>
+                        <div className="flex justify-between items-center gap-6">
+                            <AceEditor
+                                className="rounded-xl"
+                                width="50%"
+                                height="300px"
+                                mode="markdown"
+                                theme={"monokai"}
+                                name="blah2"
+                                fontSize={18}
+                                showPrintMargin={true}
+                                showGutter={true}
+                                highlightActiveLine={true}
+                                placeholder="Here your description"
+                                defaultValue="# Preview markdown"
+                                setOptions={{
+                                    enableBasicAutocompletion: true,
+                                    enableLiveAutocompletion: true,
+                                    enableSnippets: true,
+                                    enableMultiselect: true,
+                                    showLineNumbers: true,
+                                    tabSize: 2,
+                                    useWorker: false,
+                                }}
+                            />
+                            <div className="w-2/4 h-[300px] rounded-xl">
+                                Preview markdown
+                            </div>
                         </div>
                     </div>
                 </div>
