@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { LessonModalPros, TestCases } from "../../types/type";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "react-toastify";
@@ -11,10 +11,18 @@ import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/mode-markdown";
 import { PiPlus } from "react-icons/pi";
 import "../app/globals.css";
+import { Processor, unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkGfm from 'remark-gfm'
+import remarkReact from 'remark-react'
+import "github-markdown-css/github-markdown.css"
+
 
 const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [lesson, setLesson] = useState<string>("");
+    const [description, setDescription] = useState<string>("# Preview markdown");
+    const [markdown, setMarkdown] = useState<any>();
     const [testCases, setTestCases] = useState<TestCases[]>([
         {
             input: undefined,
@@ -58,10 +66,19 @@ const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
             toast.error("Something went wrong!");
         });
     }
+    type MarkdownResult = React.ReactNode;
+
+    const processor = unified()
+        .use(remarkParse)
+        .use(remarkGfm)
+        .use(remarkReact, React)
+
+    const md: MarkdownResult = processor.processSync(description).result as React.ReactNode;
+
     return (
         <div className="absolute w-full h-dvh flex items-center justify-center">
             <form
-                className="w-[80%] relative z-10 rounded-2xl p-10 h-[80%] bg-[rgba(81,82,127,0.6)] flex flex-col justify-between"
+                className="w-[90%] relative z-10 rounded-2xl p-10 h-[90%] bg-[rgba(81,82,127,0.6)] flex flex-col justify-between"
                 onSubmit={handleCreateTopic}
             >
                 <div className="overflow-auto my-5 scroll pr-3">
@@ -158,9 +175,9 @@ const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
                         <p className="text-4xl my-10">Description</p>
                         <div className="flex justify-between items-center gap-6">
                             <AceEditor
-                                className="rounded-xl"
+                                className="rounded-xl max-h-min"
                                 width="50%"
-                                height="300px"
+                                height="500px"
                                 mode="markdown"
                                 theme={"monokai"}
                                 name="blah2"
@@ -179,9 +196,12 @@ const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
                                     tabSize: 2,
                                     useWorker: false,
                                 }}
+                                onChange={(e) => {
+                                    setDescription(e)
+                                }}
                             />
-                            <div className="w-2/4 h-[300px] rounded-xl">
-                                Preview markdown
+                            <div className="w-2/4 h-[500px] h-min-[500px] p-5 rounded-xl preview markdown-body overflow-x-auto scroll">
+                                {md}
                             </div>
                         </div>
                     </div>
