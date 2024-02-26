@@ -67,10 +67,10 @@ const ModalForTask: FC<LessonModalPros> = ({ setIsOpen, id }) => {
         });
     }
     type MarkdownResult = React.ReactNode;
-
     const processor = unified()
         .use(remarkParse)
         .use(remarkGfm)
+        //@ts-ignore
         .use(remarkReact, React)
 
     const md: MarkdownResult = processor.processSync(description).result as React.ReactNode;
