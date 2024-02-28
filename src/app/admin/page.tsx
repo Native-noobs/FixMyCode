@@ -14,7 +14,7 @@ import ModalForLesson from "@/components/modal-lesson";
 const Admin: FC = () => {
     const [lessons, setLessons] = useState<Lesson[]>();
     const [modal, setModal] = useState<boolean>(false);
-    const [lessonModal, setLessonModal] = useState<boolean>(false);
+   // const [lessonModal, setLessonModal] = useState<boolean>(false);
     const notify = () => toast.success("Successfully deleted!");
 
     useEffect(() => {
