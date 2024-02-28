@@ -11,9 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      - DATABASE_URL:${{ secrets.DATABASE_URL }}
-      - NEXT_APP_TELEGRAM_BOT_TOKEN :${{ secrets.NEXT_APP_TELEGRAM_BOT_TOKEN }}
+    env: DATABASE_URL:${{ secrets.DATABASE_URL }}
+      NEXT_APP_TELEGRAM_BOT_TOKEN :${{ secrets.NEXT_APP_TELEGRAM_BOT_TOKEN }}
     strategy:
       matrix:
         node-version: [18, 20]
