@@ -14,7 +14,7 @@ import ModalForLesson from "@/components/modal-lesson";
 const Admin: FC = () => {
     const [lessons, setLessons] = useState<Lesson[]>();
     const [modal, setModal] = useState<boolean>(false);
-    const [lessonModal, setLessonModal] = useState<boolean>(false);
+   // const [lessonModal, setLessonModal] = useState<boolean>(false);
     const notify = () => toast.success("Successfully deleted!");
 
     useEffect(() => {
@@ -74,7 +74,7 @@ const Admin: FC = () => {
                     })}
                 </div>
             </div>
-            <div
+            {/*  <div
                 className="absolute bottom-10 right-10"
                 onClick={() => {
                     setLessonModal(true);
@@ -83,7 +83,7 @@ const Admin: FC = () => {
                 <button className="w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center hover:scale-110 active:scale-95 duration-200 shadow-sm shadow-blue-400 hover:rotate-45">
                     <BiPlus size="20px" />
                 </button>
-            </div>
+            </div> */ }
             {modal && (
                 <Modal
                     acceptButtonText="Delete"
@@ -99,7 +99,7 @@ const Admin: FC = () => {
                 />
             )}
             <Toast />
-            {lessonModal && <ModalForLesson setIsOpen={setIsOpen} />}
+            {/* lessonModal && <ModalForLesson setIsOpen={setIsOpen} /> */}
         </main>
     );
 };
