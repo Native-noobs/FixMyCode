@@ -1,18 +1,20 @@
 name: Build test
 
+ 
 on:
   push:
-    braches:
-      - main
-    pull_request:
-      branches:
-        - master
-
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  NEXT_APP_TELEGRAM_BOT_TOKEN: ${{ secrets.NEXT_APP_TELEGRAM_BOT_TOKEN }}
+  NEXT_APP_CHAT_ID: ${{ secrets.NEXT_APP_CHAT_ID }}
+  
 jobs:
   build:
     runs-on: ubuntu-latest
-    env: DATABASE_URL:${{ secrets.DATABASE_URL }}
-      NEXT_APP_TELEGRAM_BOT_TOKEN :${{ secrets.NEXT_APP_TELEGRAM_BOT_TOKEN }}
     strategy:
       matrix:
         node-version: [18, 20]
