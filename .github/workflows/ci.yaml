@@ -29,6 +29,6 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Genereate prisma
-        run: npx prisma build
+        run: npx prisma generate
       - name: Build next app
         run: npm run build
