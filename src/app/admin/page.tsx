@@ -99,7 +99,7 @@ const Admin: FC = () => {
                 />
             )}
             <Toast />
-            {lessonModal && <ModalForLesson setIsOpen={setIsOpen} />}
+            {/* lessonModal && <ModalForLesson setIsOpen={setIsOpen} /> */}
         </main>
     );
 };
