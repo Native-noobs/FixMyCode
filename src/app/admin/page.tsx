@@ -34,9 +34,9 @@ const Admin: FC = () => {
             })
             .then((data) => {});
     }
-    function setIsOpen() {
-        setLessonModal(false);
-    }
+    // function setIsOpen() {
+    //     setLessonModal(false);
+    // }
     return (
         <main className="bg-slate-800 w-full min-h-dvh flex flex-col text-gray-100">
             <div className="container mx-auto my-10 p-5 md:px-0">
