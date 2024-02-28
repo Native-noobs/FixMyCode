@@ -21,9 +21,9 @@ jobs:
     name: Node${{ matrix.node-version }}
     steps:
       - name: Checkout code
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: Set up node.js
-        uses: action/setup-node@v3
+        uses: actions/setup-node@v3
         with:
           node-version: ${{matrix.node-version}}
       - name: Install dependencies
