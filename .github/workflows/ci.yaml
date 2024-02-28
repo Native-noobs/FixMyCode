@@ -28,5 +28,7 @@ jobs:
           node-version: ${{matrix.node-version}}
       - name: Install dependencies
         run: npm i
-          npx prisma build
-          npm run build
+      - name: Genereate prisma
+        run: npx prisma build
+      - name: Build next app
+        run: npm run build
