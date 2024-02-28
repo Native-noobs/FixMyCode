@@ -12,7 +12,7 @@ export default async function handler(
                 homework: true
             },
             orderBy: {
-                createdAt: "desc"
+                createdAt: "asc"
             }
         })
         res.status(200).json({
