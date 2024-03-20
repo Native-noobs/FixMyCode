@@ -36,7 +36,7 @@ export default function Home() {
                         key={i}
                       >
                         <div className="flex items-center gap-3">
-                          <p className="text-xl">{i} - </p>
+                          <p className="text-xl">{i}. </p>
                           <p className="text-xl">{homework.title}</p>
                         </div>
                         <Link
