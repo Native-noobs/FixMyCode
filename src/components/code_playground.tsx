@@ -222,7 +222,7 @@ const Code_playground: FC<HomeWorkProps> = ({ data }) => {
         action="/code"
         className="ml-auto text-white mt-5 flex w-full justify-end gap-5"
       >
-        <button
+{/*         <button
           className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 flex items-center gap-2 duration-500 disabled:bg-blue-400"
           disabled={test}
           onClick={handleCodeTest}
@@ -231,7 +231,7 @@ const Code_playground: FC<HomeWorkProps> = ({ data }) => {
             className={`animate-spin duration-500 ${!test && 'hidden'}`}
           />
           Sinash
-        </button>
+        </button> */}
         <button
           className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 flex items-center gap-2 w-max duration-500 disabled:bg-"
           disabled={submit}
